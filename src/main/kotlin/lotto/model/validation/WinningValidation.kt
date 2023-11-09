@@ -1,15 +1,16 @@
 package lotto.model.validation
 
+import lotto.dto.WinningAndBonusNumbers
+
 class WinningValidation(
-    private val winningNumbers: List<LottoNumber>,
-    private val bonusNumber: LottoNumber,
+    private val winningAndBonusNumbers: WinningAndBonusNumbers
 ) {
     init {
-        validateDuplicate(winningNumbers, bonusNumber)
+        validateDuplicate(winningAndBonusNumbers)
     }
 
-    private fun validateDuplicate(winningNumbers: List<LottoNumber>, bonusNumber: LottoNumber) {
-        require(winningNumbers.count { it == bonusNumber } == 0) {
+    private fun validateDuplicate(winningAndBonusNumbers: WinningAndBonusNumbers) {
+        require(winningAndBonusNumbers.winNums.count { it == winningAndBonusNumbers.bonusNum } == 0) {
             WINNING_BONUS_NUMBER_IS_NOT_DUPLICATE
         }
     }

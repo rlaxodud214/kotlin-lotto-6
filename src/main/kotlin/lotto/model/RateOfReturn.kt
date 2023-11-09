@@ -1,16 +1,16 @@
 package lotto.model
 
+import lotto.Constants
+import lotto.util.Converter.digitToFloat
 import lotto.util.Match
 import kotlin.math.roundToLong
 
 class RateOfReturn(
     private val lottosMatchCount: Map<Int, Int>,
-    private val amount: Long,
 ) {
 
     fun calculate(): String {
-        val totalWinningAmount = getTotalWinningAmount()
-        var averageWinningAmount = divideBydivisor(totalWinningAmount, amount)
+        var averageWinningAmount = divideBydivisor(getTotalWinningAmount(), getTotalBuyingAmount())
 
         val scaledAmount = averageWinningAmount * PERCENT_CONVERSION_FACTOR * SCALING_FACTOR
         val roundedAmount = scaledAmount.roundToLong()
@@ -25,11 +25,13 @@ class RateOfReturn(
             .sumOf { it }
     }
 
+    private fun getTotalBuyingAmount() = lottosMatchCount.values.sumOf { it } * Constants.LOTTO_PRICE.toLong()
+
     private fun divideBydivisor(dividend: Long, divisor: Any): Float {
-        val result = dividend / divisor.toString().toFloat()
+        val result = dividend / divisor.digitToFloat()
 
         require(result.isFinite()) {
-            DIVIDE_RESULT_ISINFINITE
+            DIVIDE_RESULT_ISINFINITE.format(dividend, divisor.digitToFloat(), result)
         }
 
         return result
@@ -40,6 +42,6 @@ class RateOfReturn(
         private const val SCALING_FACTOR = 100.0f
 
         private const val PERCENTAGE_FORMAT = "%,.1f%%"
-        private const val DIVIDE_RESULT_ISINFINITE = "수익률에서 나눈 결과가 올바르게 계산되지 않았습니다."
+        private const val DIVIDE_RESULT_ISINFINITE = "수익률에서 나눈 결과가 올바르게 계산되지 않았습니다. (%d / %f = %f)"
     }
 }

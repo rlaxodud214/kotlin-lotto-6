@@ -17,7 +17,6 @@ class GameController(
     private val lottosMatchCount = LottosMatchCount()
 
     // TODO: 가능하면 멤버 변수에서 빼기
-    private lateinit var buyingAmount: BuyingAmount
     private lateinit var lottos: Lottos
 
     fun play(task: Task) {
@@ -40,14 +39,14 @@ class GameController(
         when (task.state) {
             Task.State.BUYING_AMOUNT -> processBuyingAmount(task)
             Task.State.WINNING_AND_BONUS_NUMBERS -> processWinningAndBonusNumbers(task, lottos)
-            Task.State.RATE_OF_RETURN -> processRateOfReturn(task, buyingAmount)
+            Task.State.RATE_OF_RETURN -> processRateOfReturn(task)
 
             else -> throw IllegalStateException(TASK_IS_INCORRECT_CONDITION)
         }
     }
 
     private fun processBuyingAmount(task: Task) {
-        buyingAmount = inputController.BuyingAmount().also { task.nextState() }
+        val buyingAmount = inputController.BuyingAmount().also { task.nextState() }
 
         lottos = Lottos.createRandomNumbers(buyingAmount.amount / Constants.LOTTO_PRICE)
 
@@ -62,8 +61,8 @@ class GameController(
         outputView.printWinningResults(lottosMatchCount.result)
     }
 
-    private fun processRateOfReturn(task: Task, buyingAmount: BuyingAmount) {
-        val rateOfReturn = RateOfReturn(lottosMatchCount.result, buyingAmount.amount).also { task.nextState() }
+    private fun processRateOfReturn(task: Task) {
+        val rateOfReturn = RateOfReturn(lottosMatchCount.result).also { task.nextState() }
 
         val result = rateOfReturn.calculate()
 

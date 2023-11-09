@@ -12,4 +12,6 @@ object Converter {
     fun Iterable<String>.toLottoNumbers(): List<LottoNumber> {
         return this.map { LottoNumber(it.trim()) }
     }
+
+    fun Any.digitToFloat() = this.toString().toFloat()
 }

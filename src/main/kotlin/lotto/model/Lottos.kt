@@ -21,10 +21,6 @@ class Lottos(
         }
     }
 
-    override fun toString(): String {
-        return lottoNumbers.joinToString("\n")
-    }
-
     companion object {
         fun createRandomNumbers(count: Long): Lottos {
             return Lottos(

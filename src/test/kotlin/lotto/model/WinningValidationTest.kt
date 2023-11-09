@@ -1,5 +1,6 @@
 package lotto.model
 
+import lotto.dto.WinningAndBonusNumbers
 import lotto.model.validation.LottoNumber
 
 import lotto.model.validation.WinningValidation
@@ -14,9 +15,11 @@ class WinningValidationTest {
         // TODO: 당첨 번호와 보너스 번호 입력시 중복이면, 예외 발생 테스트 구현
         val winningNumbers = listOf("1", "2", "3", "4", "5", "6").toLottoNumbers()
         val bonusNumber = LottoNumber("6")
+        val winningAndBonusNumbers = WinningAndBonusNumbers(winningNumbers, bonusNumber)
 
         val exception = assertThrows<IllegalArgumentException> {
-            WinningValidation(winningNumbers, bonusNumber)
+
+            WinningValidation(winningAndBonusNumbers)
         }
         assertThat(exception.message).isEqualTo(WinningValidation.WINNING_BONUS_NUMBER_IS_NOT_DUPLICATE)
     }

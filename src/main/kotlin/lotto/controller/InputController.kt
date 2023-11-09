@@ -17,8 +17,8 @@ class InputController(
         val winningNumbers = WinningNumbers(inputView.winningNumbersPrompt())
         val bonusNumber = BonusNumber(inputView.bonusNumberPrompt())
 
-        WinningValidation(winningNumbers.numbers, bonusNumber.number)
-
-        return WinningAndBonusNumbers(winningNumbers.numbers, bonusNumber.number)
+        return WinningAndBonusNumbers(winningNumbers.numbers, bonusNumber.number).also {
+            WinningValidation(it)
+        }
     }
 }

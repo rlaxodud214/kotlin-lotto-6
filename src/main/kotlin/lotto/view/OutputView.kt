@@ -8,14 +8,20 @@ class OutputView {
     fun printBuyingResults(lottos: Lottos) {
         println(BUYING_COUNT_CONFIRMATION.format(lottos.lottoNumbers.size))
 
-        println("${lottos}\n")
+        lottos.lottoNumbers.forEach {
+            println(it.numbers)
+        }
     }
 
     fun printWinningResults(result: Map<Int, Int>) {
         println("$WINNING_STATISTICS\n$DIVIDING_LINE")
 
-        Match.values().forEach { match ->
-            println("${match.info} (${match.amount}$MONEY_UNIT) - ${result[match.count] ?: 0}개")
+        Match.values().forEach outer@{ match ->
+            if (match == Match.MISS) {
+                return@outer
+            }
+
+            println(WINNING_STATISTICS_INFO.format(match.info, match.amount, result[match.count] ?: 0))
         }
     }
 
@@ -30,7 +36,10 @@ class OutputView {
 
         private const val WINNING_STATISTICS = "당첨 통계"
         private const val DIVIDING_LINE = "---"
-        private const val MONEY_UNIT = "원"
+
+        private const val WINNING_ = "---"
+        private const val WINNING_STATISTICS_INFO = "%s (%s원) - %d개"
+
 
         private const val TOTAL_RATE_OF_RETURN = "총 수익률은 %s입니다."
     }

@@ -1,6 +1,3 @@
 package lotto.dto
 
-data class LottoMatchCount(
-    val winning: Int,
-    val bonus: Int,
-)
+data class LottoMatchCount(val winning: Int, val bonus: Int)

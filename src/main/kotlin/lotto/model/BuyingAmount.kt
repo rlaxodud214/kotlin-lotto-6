@@ -3,16 +3,16 @@ package lotto.model
 import lotto.Constants
 
 class BuyingAmount(
-    private val inputData: String
+    private val _amount: String
 ) {
-    val amount: Long get() = inputData.toLong()
+    val amount: Long
 
     init {
-        val data = requireNotNull(inputData.toLongOrNull()) {
+        amount = requireNotNull(_amount.toLongOrNull()) {
             BUYING_AMOUNT_ONLY_DIGIT
         }
 
-        validate(data)
+        validate(amount)
     }
 
     private fun validate(data: Long) {

@@ -23,8 +23,6 @@ class Lotto(private val _numbers: List<LottoNumber>) {
     private fun validateDuplicate() =
         require(_numbers.size == _numbers.toSet().size) { LOTTO_NUMBERS_NON_DUPLICATE }
 
-    override fun toString() = "$numbers"
-
     companion object {
         const val LOTTO_NUMBERS_OUT_OF_SIZE =
             "로또 번호는 ${Constants.LOTTO_NUMBER_SIZE}개의 숫자로 이루어져야 합니다."

@@ -6,7 +6,8 @@ enum class Match(val count: Int, val info: String, val amount: String) {
     FOURTH(4, "4개 일치", "50,000"),
     FIFTH(50, "5개 일치", "1,500,000"),
     FIFTH_BONUS(51, "5개 일치, 보너스 볼 일치", "30,000,000"),
-    SIX(6, "6개 일치", "2,000,000,000");
+    SIX(6, "6개 일치", "2,000,000,000"),
+    MISS(0, "", "0");
 
     companion object {
         fun findByCount(countData: Int): Match? {

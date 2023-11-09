@@ -9,7 +9,6 @@ object LottoCalculator {
         lotto: List<LottoNumber>,
         winningAndBonusNumbers: WinningAndBonusNumbers,
     ): LottoMatchCount {
-
         val (winningnumbers, bonusNumber) = winningAndBonusNumbers
 
         val winning = lotto.count { winningnumbers.contains(it) }
